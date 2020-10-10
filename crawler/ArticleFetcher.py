@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 
 from crawler import CrawledArticle
 
+BASE_URL = "https://www.chefkoch.de"
+
 
 class ArticleFetcher():
     def fetch(self):
@@ -11,6 +13,7 @@ class ArticleFetcher():
 
         while url != "":
             print(url)
+            # do not delete this sleep!!
             time.sleep(0.5)
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
