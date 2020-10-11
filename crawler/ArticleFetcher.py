@@ -5,7 +5,6 @@ import pandas
 import requests
 from bs4 import BeautifulSoup
 
-
 from crawler import CrawledArticle
 
 BASE_URL = "https://www.chefkoch.de"
@@ -13,38 +12,33 @@ BASE_URL = "https://www.chefkoch.de"
 
 class ArticleFetcher():
 
+    def fetch(self, url):
 
-    def fetch(self):
+        link_list = []
 
-        links = {}
-
-        url = "https://www.chefkoch.de/rs/s0g91/Franzoesische-Rezepte.html"
-
-        while url != "":
+        while True:
 
             titles = []
-            link_list = []
-
 
             print(url)
             # do not delete this sleep!!
-            time.sleep(1)
+            time.sleep(0.5)
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
 
-
+            '''
             for title in soup.select("main > article > a > div > h2"):
                 titles.append(title.text)
-
+            '''
             for link in soup.select("main > article > a"):
                 link_list.append(link.get('href'))
 
-
+            '''
             for i in range(0, len(titles)):
                 links[titles[i]] = link_list[i]
             #print(links)
                 #yield CrawledArticle(title, url, 1)
-
+            '''
             soup.select("main > article > a > div > h2")
             next_buttons = []
 
@@ -55,12 +49,13 @@ class ArticleFetcher():
                 next_href = next_buttons[-1]
                 url = next_href
             else:
-                url = ""
+                break
 
-            yield links
+        return link_list
 
-#soup.select("head > title")
-#soup.select("p > #link1") # direct child
+
+# soup.select("head > title")
+# soup.select("p > #link1") # direct child
 
 
 '''

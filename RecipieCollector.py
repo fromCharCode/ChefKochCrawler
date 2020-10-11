@@ -9,6 +9,7 @@ req = []
 
 fetcher = ArticleFetcher()
 
+
 def get_requests():
     categories = pd.read_csv("chefkoch_ouput.csv", encoding="utf8")
     for link in categories['link']:
@@ -70,18 +71,22 @@ else:
     get_requests()
     save_request()
 
+list_list = []
+final_list = []
+df1 = pd.read_csv("chefkoch_ouput.csv", encoding="utf8", low_memory=False)
+for link in df1["link"]:
+    list_list.append(fetcher.fetch(link))
 
-links = {}
-
-for element in fetcher.fetch():
-    links = element
-
-df_frz = pd.DataFrame.from_dict(links)
-df_frz.to_csv("Franzoesische-Rezepte.csv", index=False, header=True, encoding="utf8")
+for l in list_list:
+    for link in l:
+      final_list.append(link)
 
 
-#print_requests()
+df_alle = pd.DataFrame(final_list)
+df_alle.to_csv("all_recipe_links.csv", index=False, header=False, encoding="utf8")
 
-#get_articles()
-#print_articles()
-#get_num_reports()
+# print_requests()
+
+# get_articles()
+# print_articles()
+# get_num_reports()
