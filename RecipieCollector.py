@@ -70,10 +70,14 @@ else:
     get_requests()
     save_request()
 
+
+links = {}
+
 for element in fetcher.fetch():
-    print(element.title)
+    links = element
 
-
+df_frz = pd.DataFrame.from_dict(links)
+df_frz.to_csv("Franzoesische-Rezepte.csv", index=False, header=True, encoding="utf8")
 
 
 #print_requests()
