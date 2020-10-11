@@ -15,10 +15,8 @@ class ArticleFetcher():
     def fetch(self, url):
 
         link_list = []
-
+        page = 0
         while True:
-
-            titles = []
 
             print(url)
             # do not delete this sleep!!
@@ -49,6 +47,11 @@ class ArticleFetcher():
                 next_href = next_buttons[-1]
                 url = next_href
             else:
+                break
+
+            page += 1
+            if page >= 50:
+                page = 0
                 break
 
         return link_list

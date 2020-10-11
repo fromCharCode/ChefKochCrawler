@@ -79,8 +79,7 @@ for link in df1["link"]:
 
 for l in list_list:
     for link in l:
-      final_list.append(link)
-
+        final_list.append(link)
 
 df_alle = pd.DataFrame(final_list)
 df_alle.to_csv("all_recipe_links.csv", index=False, header=False, encoding="utf8")
