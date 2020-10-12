@@ -73,7 +73,7 @@ recipe_instruction = os.linesep.join([s for s in recipe_instruction.splitlines()
 # print(ingredients_list)
 
 # get making of
-making_of = soup.find('article', {'class': 'ds-box'})
+print(soup.select_one("main > article.ds-box.ds-grid-float.ds-col-12.ds-col-m-8.ds-or-3 > div.ds-box").text.strip())
 
 # get tags
 
