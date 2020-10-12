@@ -21,10 +21,12 @@ soup = BeautifulSoup(r.text, "html.parser")
 # while links has next
 # ...code ... yield CrawledArticle
 
+
 # get rating
 for strong in soup.select("main > article > div > div > div > a > div > span > strong"):
     rating = strong.text
 print(rating)
+
 
 # get amount of raters
 p = re.compile("[0-9]+")
@@ -33,10 +35,12 @@ for span in soup.select("main > article > div > div > div > a > div > span > spa
         nums = p.findall(span.text)[0]
 print(nums)
 
+
 # get name
 for name in soup.select("main > article > div > h1"):
     name = name.text
 print(name)
+
 
 # get time
 p2 = re.compile("[0-9]+ Min.")
@@ -45,6 +49,7 @@ for s in soup.find_all("span", {"class": "recipe-preptime"}):
         time = p2.findall(s.text)[0]
 print(time)
 
+
 # get difficulty
 p3 = re.compile("[a-z]+")
 for s in soup.find_all("span", {"class": "recipe-difficulty"}):
@@ -52,30 +57,53 @@ for s in soup.find_all("span", {"class": "recipe-difficulty"}):
         difficulty = p3.findall(s.text)[0]
 print(difficulty)
 
+
 # get amount of portions
 portion_amount = soup.find('input', {'class': 'ds-input'}).get('value')
 print(portion_amount)
 
-# get ingredients
-recipe_ingredients = soup.find_all(class_="ingredients table-header")
-for elem in recipe_ingredients:
-    test = elem.text
-    test = os.linesep.join([s for s in test.splitlines() if s])
 
-    print(test)
-#print(recipe_ingredients)
+# get ingredients
+ingredients = []
+a_l = []
+i_l = []
+amounts = soup.select("main > article > table > tbody > tr > td.td-left")
+for amount in amounts:
+    test = amount.text.strip()
+    test = test.replace("   ", "")
+    test = test.replace(" ½", ".5")
+    test = test.replace("  ", " ")
+    test = os.linesep.join([s for s in test.splitlines() if s])
+    if not test:
+        test = '0'
+    a_l.append(test)
+
+ings = soup.select("main > article > table > tbody > tr > td.td-right")
+for ing in ings:
+    i = ing.text
+    i = os.linesep.join([s for s in i.splitlines() if s])
+    i_l.append(i)
+
+for i in range(0, len(amounts)):
+    ingredients.append((a_l[i], i_l[i]))
+
+for i in ingredients:
+    print(i) # printing ingredients
+
 
 # get instructions
-recipe_instruction = soup.select_one("main > article.ds-box.ds-grid-float.ds-col-12.ds-col-m-8.ds-or-3 > div.ds-box").text
+recipe_instruction = soup.select_one("main > article.ds-box.ds-grid-float.ds-col-12.ds-col-m-8.ds-or-3 > div.ds-box").text.strip()
 recipe_instruction = os.linesep.join([s for s in recipe_instruction.splitlines() if s])
-#print(recipe_instruction)
+print(recipe_instruction)
 
-# print(ingredients_list)
-
-# get making of
-print(soup.select_one("main > article.ds-box.ds-grid-float.ds-col-12.ds-col-m-8.ds-or-3 > div.ds-box").text.strip())
 
 # get tags
+tags_source = soup.select("main > article > div > amp-carousel > div")
+tags = []
+for tag in tags_source:
+    tags.append(tag.text.split()[0])
+
+print(tags)
 
 '''
             for title in soup.select("main > article > a > div > h2"):
