@@ -1,9 +1,8 @@
 class CrawledArticle():
-    def __init__(self, title="Init_title",
-                 rating=0.0, rating_c=0,
-                 num_rep=0, time=0,
-                 difficulty="normal", person_c=1,
-                 ingredients=[], description="", tags=[]):
+    def __init__(self, title,
+                 rating, rating_c, time,
+                 difficulty, person_c,
+                 ingredients, description, tags):
         self.rating_count = rating_c
         self.time = time
         self.difficulty = difficulty
@@ -13,4 +12,12 @@ class CrawledArticle():
         self.tags = tags
         self.rating = rating
         self.title = title
-        self.num_rep = num_rep
+
+        print(
+            str(self.title), "(" + str(self.rating) + "/" + str(self.rating_count) + "):" + "\n" +
+            "time: " + str(self.time) + " difficulty: " + str(self.difficulty) + "\n" +
+            "Ingredients for " + str(self.person_count) + " persons: " + "\n" +
+            str(self.ingredients), "\n" +
+            "How to: " + str(self.description) + "\n" +
+            str(self.tags) + "\n\n"
+            )

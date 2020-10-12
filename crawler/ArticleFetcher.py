@@ -5,8 +5,6 @@ import pandas
 import requests
 from bs4 import BeautifulSoup
 
-from crawler import CrawledArticle
-
 BASE_URL = "https://www.chefkoch.de"
 
 
