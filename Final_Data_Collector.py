@@ -55,10 +55,13 @@ for s in soup.find_all("span", {"class": "recipe-difficulty"}):
 print(difficulty)
 
 # get amount of portions
+portion_amount = soup.find('input', {'class': 'ds-input'}).get('value')
+print(portion_amount)
 
 # get ingredients
 
 # get making of
+making_of = soup.find('article', {'class': 'ds-box'})
 
 # get tags
 
