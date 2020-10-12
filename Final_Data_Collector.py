@@ -1,5 +1,7 @@
+import os
 import time
 from urllib.parse import urljoin
+
 import pandas as pd
 import re
 
@@ -8,12 +10,11 @@ from bs4 import BeautifulSoup
 
 from crawler import CrawledArticle
 
-
 df = pd.read_csv("all_recipe_links.csv")
 
 print(df.head())
 url = "https://www.chefkoch.de/rezepte/1498571255339854/Wildschweingulasch.html"
-            # do not delete this sleep!!
+# do not delete this sleep!!
 time.sleep(0.5)
 r = requests.get(url)
 soup = BeautifulSoup(r.text, "html.parser")
@@ -32,12 +33,10 @@ for span in soup.select("main > article > div > div > div > a > div > span > spa
         nums = p.findall(span.text)[0]
 print(nums)
 
-
 # get name
 for name in soup.select("main > article > div > h1"):
     name = name.text
 print(name)
-
 
 # get time
 p2 = re.compile("[0-9]+ Min.")
@@ -45,7 +44,6 @@ for s in soup.find_all("span", {"class": "recipe-preptime"}):
     if p2.findall(s.text):
         time = p2.findall(s.text)[0]
 print(time)
-
 
 # get difficulty
 p3 = re.compile("[a-z]+")
@@ -59,6 +57,20 @@ portion_amount = soup.find('input', {'class': 'ds-input'}).get('value')
 print(portion_amount)
 
 # get ingredients
+recipe_ingredients = soup.find_all(class_="ingredients table-header")
+for elem in recipe_ingredients:
+    test = elem.text
+    test = os.linesep.join([s for s in test.splitlines() if s])
+
+    print(test)
+#print(recipe_ingredients)
+
+# get instructions
+recipe_instruction = soup.select_one("main > article.ds-box.ds-grid-float.ds-col-12.ds-col-m-8.ds-or-3 > div.ds-box").text
+recipe_instruction = os.linesep.join([s for s in recipe_instruction.splitlines() if s])
+#print(recipe_instruction)
+
+# print(ingredients_list)
 
 # get making of
 making_of = soup.find('article', {'class': 'ds-box'})
@@ -78,8 +90,8 @@ making_of = soup.find('article', {'class': 'ds-box'})
                 #yield CrawledArticle(title, url, 1)
 '''
 
-            #soup.select("main > article > a > div > h2")
-            #next_buttons = []
+# soup.select("main > article > a > div > h2")
+# next_buttons = []
 '''
             for item in soup.select("main > div > nav > ul > li > a"):
                 next_buttons.append(item.get('href'))
