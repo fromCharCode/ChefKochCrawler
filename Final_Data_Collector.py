@@ -66,12 +66,12 @@ class FinalDataCollector():
             for amount in amounts:
                 test = amount.text.strip()
                 test = test.replace("   ", "")
-                test = test.replace(" ½", ".5")
-                test = test.replace("½", "0.5")
-                test = test.replace(" ¼", ".25")
-                test = test.replace("¼", "0.25")
-                test = test.replace(" ⅛", ".125")
-                test = test.replace("⅛", "0.125")
+                test = test.replace(" ½", ",5")
+                test = test.replace("½", "0,5")
+                test = test.replace(" ¼", ",25")
+                test = test.replace("¼", "0,25")
+                test = test.replace(" ⅛", ",125")
+                test = test.replace("⅛", "0,125")
                 test = test.replace("  ", " ")
                 test = os.linesep.join([s for s in test.splitlines() if s])
                 if not test:
@@ -101,10 +101,6 @@ class FinalDataCollector():
 
             yield CrawledArticle(name, rating, nums, t, difficulty, portion_amount, ingredients, recipe_instruction, tags)
 
-
-collector = FinalDataCollector()
-for elem in collector.collect():
-    pass
 
 '''
 #search.pyhttps://www.crummy.com/software/BeautifulSoup/bs4/doc/

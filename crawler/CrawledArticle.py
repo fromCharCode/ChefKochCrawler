@@ -1,3 +1,5 @@
+import pandas as pd
+
 class CrawledArticle():
     def __init__(self, title,
                  rating, rating_c, time,
@@ -21,3 +23,12 @@ class CrawledArticle():
             "How to: " + str(self.description) + "\n" +
             str(self.tags) + "\n\n"
             )
+
+    def to_tuple(self):
+        return (
+            self.title,
+            self.rating, self.rating_count,
+            self.time, self.difficulty, self.person_count,
+            self.ingredients, self.description,
+            self.tags
+        )
