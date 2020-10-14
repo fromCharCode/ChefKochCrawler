@@ -1,12 +1,19 @@
-import sqlite3
-import time
-import ast
 import pandas as pd
+from sqlalchemy import create_engine
 
 
+def insert_recipe():
+    engine = create_engine('sqlite:///recipe_database.db')
+    read_recipe_csv = pd.read_csv("all_articles.csv")
+    read_recipe_csv_df = pd.DataFrame(read_recipe_csv)
+    read_recipe_csv_df.to_sql(name="all_recipes", con=engine)
 
-def insert_recipe(title, rating, rating_c, recipe_time, difficulty, person_c, ingredients, description, tags):
-    try:
+
+insert_recipe()
+
+''''            item["title"], item["rating"], item["rating_c"], item["recipe_time"], item[
+                "difficulty"], item["person_c"], item["ingredients"], item["description"], item["tags"]
+                    try:
 
         sqliteConnection = sqlite3.connect('recipe_database')
         cursor = sqliteConnection.cursor()
@@ -27,21 +34,12 @@ def insert_recipe(title, rating, rating_c, recipe_time, difficulty, person_c, in
         if (sqliteConnection):
             sqliteConnection.close()
             print("The SQLite connection is closed")
-
-
-from sqlalchemy import create_engine
-engine = create_engine('sqlite://', echo=False)
-test = pd.read_csv("all_articles.csv", chunksize=1)
-test2 = pd.DataFrame(test)
-test2.to_sql(name="test", con=engine)
-
-print(test2)
-
-i = 0
-
+            
+            
 for item in test:
     time.sleep(3)
     i += 1
+
     """
     title = item["title"]
     rating = item["rating"]
@@ -64,5 +62,5 @@ for item in test:
 
 #insert_recipe('test', 4.5, 4, 10, 'test', 4, 'test', 'test', 'test')
 
-''''            item["title"], item["rating"], item["rating_c"], item["recipe_time"], item[
-                "difficulty"], item["person_c"], item["ingredients"], item["description"], item["tags"]'''
+                
+                '''

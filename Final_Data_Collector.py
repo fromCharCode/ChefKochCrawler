@@ -27,7 +27,7 @@ class FinalDataCollector():
             time.sleep(0.5)
             r = requests.get(url)
 
-            soup = soup = BeautifulSoup(r.text, "html.parser")
+            soup = BeautifulSoup(r.text, "html.parser")
 
             # get rating
             for strong in soup.select("main > article > div > div > div > a > div > span > strong"):
@@ -98,8 +98,8 @@ class FinalDataCollector():
             for tag in tags_source:
                 tags.append(tag.text.split()[0])
 
-
-            yield CrawledArticle(name, rating, nums, t, difficulty, portion_amount, ingredients, recipe_instruction, tags)
+            yield CrawledArticle(name, rating, nums, t, difficulty, portion_amount, ingredients, recipe_instruction,
+                                 tags)
 
 
 '''
