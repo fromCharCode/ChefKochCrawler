@@ -18,7 +18,7 @@ class ArticleFetcher():
 
             print(url)
             # do not delete this sleep!!
-            time.sleep(0.5)
+            time.sleep(0.05)
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
 

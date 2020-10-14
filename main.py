@@ -3,11 +3,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import csv
 
-
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 BASE_URL = "https://www.chefkoch.de"
 URL = "https://www.chefkoch.de/rezepte/kategorien/"
-
 
 links = {}
 
@@ -39,14 +37,12 @@ def print_categories():
 
 
 def save_categories():
-
     dict_data = []
     for k, v in links.items():
         dict_data.append(dict(category=k, link=v))
 
     df = pd.DataFrame(dict_data)
     df.to_csv(r'chefkoch_ouput.csv', index=False, header=True, encoding="utf8")
-
 
 
 def main():
